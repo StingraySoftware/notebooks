@@ -1,0 +1,3 @@
+# To ignore prompt numbers and cell output when adding any notebook.
+# See https://github.com/adrn/DropOutput for configuration.
+*.ipynb  filter=clean_ipynb
