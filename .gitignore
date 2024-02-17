@@ -1,3 +1,7 @@
 .ipynb_checkpoints
 .DS_Store
 .vscode
+*.png
+*.jpg
+*.jpeg
+
