@@ -34,6 +34,7 @@ jobs:
         run: |
           # We need to specify the tests 
           # What type of exceptions and error messages
-          # do we want to raise 
+          # do we want to raise Or should make some basic tests
+          # first so see wheter this is working?
         working-directory: notebooks
 """
