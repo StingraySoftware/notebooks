@@ -1,4 +1,3 @@
-"""
 name: Build & Test Notebooks
 
 on:
@@ -25,16 +24,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -e ".[docs]"
-"""
       - name: Build notebooks
         run: |
           make html
         working-directory: notebooks
       - name: Test notebooks
         run: |
-          # We need to specify the tests 
-          # What type of exceptions and error messages
-          # do we want to raise Or should make some basic tests
-          # first so see wheter this is working?
+          for notebook in notebooks/*.ipynb; do
+            jupyter nbconvert --execute --inplace --ExecutePreprocessor.timeout=600 $notebook;
+          done
         working-directory: notebooks
-"""
