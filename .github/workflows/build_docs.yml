@@ -45,7 +45,10 @@ jobs:
         run: |
           cd stingray/docs
           make html
-
-      - name: Tox Test
+      - name: Install tox
+        run: |
+          pip install tox
+      
+      - name: Run tox test
         run: |
           tox -e notebook_test
