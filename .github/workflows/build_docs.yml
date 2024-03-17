@@ -13,7 +13,7 @@ jobs:
       - name: Checkout notebooks repo
         uses: actions/checkout@v4
         with:
-          repository: StingraySoftware/notebooks
+          repository: AnonymousCodes911/notebooks
           path: ./notebooks
 
       - name: Checkout stingray repo
