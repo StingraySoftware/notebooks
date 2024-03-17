@@ -30,12 +30,13 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install pandoc
-
+          pip install jupyter
+          
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install sphinx
-          python -m pip install -r notebooks/requirements.txt
+          pip install -r notebooks/requirements.txt
+          pip install sphinx sphinx-astropy nbsphinx
 
       - name: Convert Notebooks to RST
         run: |
@@ -46,12 +47,17 @@ jobs:
           cd stingray/docs
           make html
 
-      - name: Running Tox Test
+      - name: Install tox
+        run: |
+          pip install tox
+      
+      - name: Run tox test
         run: |
           tox -e notebook_test
+
       - name: Upload TESTLOG
         uses: actions/upload-artifact@v2
         with:
           name: TESTLOG
           path: ./notebooks/TESTLOG
-  
+    
