@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 
 project = 'Stingray Notebooks'
 author = 'Your Name'
-
+master_doc = 'index'
 # The full version, including alpha/beta/rc tags
 release = '0.1'
 
@@ -34,4 +34,6 @@ html_static_path = ['_static']
 # -- Extension configuration -------------------------------------------------
 
 # nbsphinx options
-nbsphinx_execute = 'never'  # Change this line
+nbsphinx_execute = 'never' 
+
+
