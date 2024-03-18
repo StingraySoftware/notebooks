@@ -25,31 +25,33 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install pandoc
           pip install jupyter
+      - name: Install pandoc
+        run: |
+          wget https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2-1-amd64.deb
+          sudo dpkg -i pandoc-2.14.2-1-amd64.deb
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r notebooks/requirements.txt
           pip install sphinx sphinx-astropy nbsphinx
-
       - name: Convert Notebooks to RST
         run: |
           find ./notebooks -name "*.ipynb" -exec jupyter nbconvert --to rst {} \;
 
-      - name: Build Docs
-        run: |
-          cd stingray/docs
-          make html
       - name: Install tox
         run: |
           pip install tox
-      
-      - name: Run tox test
+
+      - name: Run Tests on notebook
         run: |
           tox -e notebook_test
+        working-directory: ./notebooks
+
+      - name: Build documentation
+        run: |
+          sphinx-build -b html -d _build/doctrees . _build/html
         working-directory: ./notebooks
