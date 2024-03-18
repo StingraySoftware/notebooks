@@ -46,7 +46,11 @@ jobs:
         run: |
           cd stingray
           pip install .
+          
+      - name: Install tox
+        run: |
+          pip install tox
 
-      - name: Build Docs
+      - name: Build Documentation
         run: |
           tox -e build_docs
