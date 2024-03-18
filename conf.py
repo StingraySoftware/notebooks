@@ -34,4 +34,4 @@ html_static_path = ['_static']
 # -- Extension configuration -------------------------------------------------
 
 # nbsphinx options
-nbsphinx_execute = 'always'
+nbsphinx_execute = 'never'  # Change this line
