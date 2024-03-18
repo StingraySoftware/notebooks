@@ -45,7 +45,9 @@ jobs:
       - name: Run notebook tests
         run: |
           tox -e notebook_test
+          working-directory: ./notebooks
 
       - name: Build Documentation
         run: |
           tox -e build_docs
+          working-directory: ./notebooks
