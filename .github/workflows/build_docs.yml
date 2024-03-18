@@ -26,14 +26,16 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.10'
-
-      - name: Install dependencies
+      - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install pandoc
+          pip install jupyter
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
           pip install -r notebooks/requirements.txt
           pip install sphinx sphinx-astropy nbsphinx
-
       - name: Convert Notebooks to RST
         run: |
           find ./notebooks -name "*.ipynb" -exec jupyter nbconvert --to rst {} \;
@@ -47,7 +49,5 @@ jobs:
           tox -e notebook_test
           working-directory: ./notebooks
 
-      - name: Build Documentation
-        run: |
-          tox -e build_docs
-          working-directory: ./notebooks
+      - name: Build documentation
+        run: sphinx-build -b html -d _build/doctrees . _build/html
