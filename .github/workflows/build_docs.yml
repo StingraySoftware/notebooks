@@ -22,19 +22,15 @@ jobs:
           repository: StingraySoftware/stingray
           path: ./stingray
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v2
         with:
           python-version: '3.10'
 
-      - name: Install system dependencies
+      - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install pandoc
-          pip install jupyter
-
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
           pip install -r notebooks/requirements.txt
           pip install sphinx sphinx-astropy nbsphinx
 
@@ -42,14 +38,13 @@ jobs:
         run: |
           find ./notebooks -name "*.ipynb" -exec jupyter nbconvert --to rst {} \;
 
-      - name: Install stingray
-        run: |
-          cd stingray
-          pip install .
-          
       - name: Install tox
         run: |
           pip install tox
+
+      - name: Run notebook tests
+        run: |
+          tox -e notebook_test
 
       - name: Build Documentation
         run: |
