@@ -52,3 +52,4 @@ jobs:
       - name: Run tox test
         run: |
           tox -e notebook_test
+        working-directory: ./notebooks
