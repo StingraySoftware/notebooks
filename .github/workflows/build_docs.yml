@@ -9,7 +9,6 @@ on:
 jobs:
   build-notebooks:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout notebooks repo
         uses: actions/checkout@v4
@@ -23,15 +22,19 @@ jobs:
           repository: StingraySoftware/stingray
           path: ./stingray
 
-      - name: Setup Python
-        uses: actions/setup-python@v2
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Install dependencies
+      - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install pandoc
+          pip install jupyter
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
           pip install -r notebooks/requirements.txt
           pip install sphinx sphinx-astropy nbsphinx
 
@@ -39,15 +42,11 @@ jobs:
         run: |
           find ./notebooks -name "*.ipynb" -exec jupyter nbconvert --to rst {} \;
 
-      - name: Build Documentation
+      - name: Install stingray
         run: |
-          cd stingray/docs
-          make html
+          cd stingray
+          pip install .
 
-      - name: Install tox
-        run: |
-          pip install tox
-
-      - name: Run tox build_docs
+      - name: Build Docs
         run: |
           tox -e build_docs
