@@ -29,6 +29,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install pandoc
           pip install sphinx sphinx-astropy nbsphinx
+      
+      - name: Install Tox
+        run: |
+          pip install tox
 
       - name: Install Stingray
         run: pip install ./stingray
