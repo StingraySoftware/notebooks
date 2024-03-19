@@ -4,22 +4,19 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
   build-notebooks:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout notebooks repo
-        uses: actions/checkout@v4
-        with:
-          repository: AnonymousCodes911/notebooks
-          path: ./notebooks
-
       - name: Checkout stingray repo
         uses: actions/checkout@v4
         with:
-          repository: StingraySoftware/stingray
+          repository: AnonymousCodes911/stingray
           path: ./stingray
 
       - name: Setup Python
@@ -31,15 +28,11 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install pandoc
-          pip install -r notebooks/requirements.txt
           pip install sphinx sphinx-astropy nbsphinx
-          pip install ./stingray  # Install Stingray
 
-      - name: Update the notebooks submodule
-        run: | 
-          git submodule update --remote --merge
+      - name: Install Stingray
+        run: pip install ./stingray
 
       - name: Run Stingray tox test
-        run: |
-          tox -e build_docs
-        working-directory: ./notebooks
+        run: tox -e build_docs
+        working-directory: ./stingray
