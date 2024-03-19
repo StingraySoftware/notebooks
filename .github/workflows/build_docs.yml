@@ -34,5 +34,6 @@ jobs:
         run: pip install ./stingray
 
       - name: Run Stingray tox test
-        run: tox -e build_docs
+        run: |
+          tox -e build_docs
         working-directory: ./stingray
