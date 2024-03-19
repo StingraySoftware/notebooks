@@ -4,54 +4,45 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
   build-notebooks:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout notebooks repo
-        uses: actions/checkout@v4
-        with:
-          repository: StingraySoftware/notebooks
-          path: ./notebooks
-
       - name: Checkout stingray repo
         uses: actions/checkout@v4
         with:
           repository: StingraySoftware/stingray
           path: ./stingray
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          pip install jupyter
       - name: Install pandoc
         run: |
           wget https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2-1-amd64.deb
           sudo dpkg -i pandoc-2.14.2-1-amd64.deb
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r notebooks/requirements.txt
-          pip install sphinx sphinx-astropy nbsphinx
-      - name: Convert Notebooks to RST
-        run: |
-          find ./notebooks -name "*.ipynb" -exec jupyter nbconvert --to rst {} \;
 
-      - name: Install tox
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install pandoc
+          sudo apt-get install -y fonts-freefont-ttf
+          pip install sphinx sphinx-astropy nbsphinx
+      
+      - name: Install Tox
         run: |
           pip install tox
 
-      - name: Run Tests on notebook
-        run: |
-          tox -e notebook_test
-        working-directory: ./notebooks
+      - name: Install Stingray
+        run: pip install ./stingray
 
-      - name: Build documentation
+      - name: Run Stingray tox test
         run: |
-          sphinx-build -b html -d _build/doctrees . _build/html
-        working-directory: ./notebooks
+          tox -e build_docs
+        working-directory: ./stingray
