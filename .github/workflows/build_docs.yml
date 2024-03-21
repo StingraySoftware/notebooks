@@ -13,8 +13,6 @@ jobs:
   build-notebooks:
     runs-on: ubuntu-latest
     steps:
-      - name: Print Head Ref
-        run: echo "Head Ref: ${{ github.head_ref }}"
       - name: Checkout stingray repo
         uses: actions/checkout@v4
         with:
