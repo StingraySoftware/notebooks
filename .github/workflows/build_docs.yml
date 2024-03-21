@@ -3,7 +3,7 @@ name: Build & Test Notebooks
 on:
   push:
     branches:
-      - tox_update
+      - main
   pull_request:
     branches:
       - tox_update
