@@ -1,4 +1,4 @@
-name: Build & Test Notebooks
+can this work with :name: Build & Test Notebooks
 on:
   push:
     branches:
@@ -11,6 +11,11 @@ jobs:
   build-notebooks:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout stingray repo
+        uses: actions/checkout@v4
+        with:
+          repository: StingraySoftware/stingray
+          path: ./stingray
       - name: Checkout notebooks repo
         uses: actions/checkout@v4
         with:
@@ -28,15 +33,13 @@ jobs:
           pip install sphinx sphinx-astropy nbsphinx tox 
       - name: Install Stingray
         run: pip install -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
-        working-directory: ./notebooks
       - name: Update submodules
         run: |
           git submodule update --init --recursive
-        working-directory: ./notebooks
       - name: Checkout notebooks submodule branch
         run: |
           git checkout tox_update
-        working-directory: ./notebooks
+
       - name: Run Build Docs
         run: tox -e build_docs
         working-directory: ./notebooks
