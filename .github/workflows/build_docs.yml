@@ -1,5 +1,4 @@
 name: Build & Test Notebooks
-
 on:
   push:
     branches:
@@ -8,51 +7,36 @@ on:
     branches:
       - tox_update
   workflow_dispatch:
-
 jobs:
   build-notebooks:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout stingray repo
-        uses: actions/checkout@v4
-        with:
-          repository: StingraySoftware/stingray
-          path: ./stingray
-
       - name: Checkout notebooks repo
         uses: actions/checkout@v4
         with:
           repository: AnonymousCodes911/notebooks  
           ref: tox_update  
           path: ./notebooks
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-
       - name: Install pandoc and dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y pandoc fonts-freefont-ttf
-          pip install sphinx sphinx-astropy nbsphinx tox
-          
+          pip install sphinx sphinx-astropy nbsphinx tox 
       - name: Install Stingray
-        run: |
-          pip install -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
+        run: pip install -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
         working-directory: ./notebooks
-        
       - name: Update submodules
         run: |
           git submodule update --init --recursive
         working-directory: ./notebooks
-
       - name: Checkout notebooks submodule branch
         run: |
           git checkout tox_update
         working-directory: ./notebooks
-      
       - name: Run Build Docs
-        run: |
-          tox -e build_docs
+        run: tox -e build_docs
         working-directory: ./notebooks
