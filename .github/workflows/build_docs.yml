@@ -13,6 +13,8 @@ jobs:
   build-notebooks:
     runs-on: ubuntu-latest
     steps:
+      - name: Print Head Ref
+        run: echo "Head Ref: ${{ github.head_ref }}"
       - name: Checkout stingray repo
         uses: actions/checkout@v4
         with:
@@ -23,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: StingraySoftware/notebooks
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref }} 
           path: ./notebooks
 
       - name: Setup Python
@@ -31,33 +33,23 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install pandoc
-        run: |
-          wget https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2-1-amd64.deb
-          sudo dpkg -i pandoc-2.14.2-1-amd64.deb
-
-      - name: Install dependencies
+      - name: Install pandoc and dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install pandoc
-          sudo apt-get install -y fonts-freefont-ttf
-          pip install sphinx sphinx-astropy nbsphinx
-      
-      - name: Installing Stingray 
-        run: |
-          pip install -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
+          sudo apt-get install -y pandoc fonts-freefont-ttf
+          pip install sphinx sphinx-astropy nbsphinx tox
 
-      - name: Update submodules and checkout notebooks submodule
+      - name: Update submodules
         run: |
           git submodule update --init --recursive
-          git checkout main
         working-directory: ./notebooks
 
-      - name: Install Tox
+      - name: Checkout notebooks submodule branch
         run: |
-          pip install tox
+          git checkout tox-update
+        working-directory: ./notebooks
 
       - name: Run Stingray tox test
         run: |
           tox -e build_docs
-        working-directory: ./stingray
+        working-directory: ./notebooks
