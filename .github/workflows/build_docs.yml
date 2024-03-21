@@ -46,9 +46,7 @@ jobs:
         run: |
           git checkout main
         working-directory: ./notebooks
-
+      
       - name: Run Stingray tox test
-        run: |
-          cd .
-          tox -e build_docs
-        working-directory: ./notebooks
+        run: tox -e build_docs
+        working-directory: .
