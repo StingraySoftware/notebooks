@@ -16,45 +16,29 @@ jobs:
         with:
           repository: StingraySoftware/stingray
           path: ./stingray
-
       - name: Checkout notebooks repo
         uses: actions/checkout@v4
         with:
-          repository: AnonymousCodes911/notebooks
-          ref: tox_update
+          repository: AnonymousCodes911/notebooks  
+          ref: tox_update  
           path: ./notebooks
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-
       - name: Install pandoc and dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y pandoc fonts-freefont-ttf
           pip install sphinx sphinx-astropy nbsphinx tox 
-
       - name: Install Stingray
         run: pip install -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
-
       - name: Update submodules
         run: |
-          cd ./notebooks
           git submodule update --init --recursive
-
-      - name: Debug GitHub workspace
-        run: echo "GitHub workspace: ${GITHUB_WORKSPACE}"
-
-      - name: Check current directory
+      - name: Checkout notebooks submodule branch
         run: |
-          if [[ "$(pwd)" != "${GITHUB_WORKSPACE}/stingray" ]]; then
-            echo "Error: not in the stingray main directory"
-            exit 1
-          fi
-    
-
+          git checkout tox_update
       - name: Run Build Docs
-        run: |
-          cd ./notebooks
-          tox -e build_docs
+        run: tox -e build_docs
+        working-directory: ./stingray
