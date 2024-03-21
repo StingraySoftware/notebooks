@@ -36,9 +36,7 @@ jobs:
           pip install sphinx sphinx-astropy nbsphinx tox 
 
       - name: Install Stingray
-        run: |
-          cd ./stingray
-          pip install 
+        run: pip install -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
 
       - name: Update submodules
         run: |
