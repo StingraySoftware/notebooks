@@ -3,10 +3,10 @@ name: Build & Test Notebooks
 on:
   push:
     branches:
-      - main
+      - tox_update
   pull_request:
     branches:
-      - main
+      - tox_update
   workflow_dispatch:
 
 jobs:
@@ -44,7 +44,7 @@ jobs:
 
       - name: Checkout notebooks submodule branch
         run: |
-          git checkout main
+          git checkout tox_update
         working-directory: ./notebooks
       
       - name: Run Stingray tox test
