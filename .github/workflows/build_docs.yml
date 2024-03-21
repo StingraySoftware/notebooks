@@ -13,9 +13,11 @@ jobs:
   build-notebooks:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Stingray
-        run: pip install -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
-
+      - name: Checkout stingray repo
+        uses: actions/checkout@v4
+        with:
+          repository: StingraySoftware/stingray
+          path: ./stingray
 
       - name: Checkout notebooks repo
         uses: actions/checkout@v4
@@ -34,6 +36,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y pandoc fonts-freefont-ttf
           pip install sphinx sphinx-astropy nbsphinx tox
+          
+      - name: Install Stingray
+        run: pip install ./stingray
 
       - name: Update submodules
         run: |
