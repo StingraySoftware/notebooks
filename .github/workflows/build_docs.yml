@@ -19,7 +19,7 @@ jobs:
       - name: Checkout notebooks repo
         uses: actions/checkout@v4
         with:
-          repository: AnonymousCodes911/notebooks  
+          repository: StingraySoftware/notebooks  
           ref: tox_update  
           path: ./notebooks
       - name: Setup Python
