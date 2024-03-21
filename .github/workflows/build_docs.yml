@@ -44,7 +44,7 @@ jobs:
 
       - name: Checkout notebooks submodule branch
         run: |
-          git checkout tox-update
+          git checkout main
         working-directory: ./notebooks
 
       - name: Run Stingray tox test
