@@ -38,8 +38,9 @@ jobs:
           pip install sphinx sphinx-astropy nbsphinx tox
           
       - name: Install Stingray
-        run: pip install ./stingray
-
+        run: pip install -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
+        working-directory: ./notebooks
+        
       - name: Update submodules
         run: |
           git submodule update --init --recursive
@@ -50,7 +51,6 @@ jobs:
           git checkout tox_update
         working-directory: ./notebooks
       
-      - name: Run Stingray tox test
-        run: |
-          tox -e build_docs
+      - name: Run Build Docs
+        run: tox -e build_docs
         working-directory: ./notebooks
