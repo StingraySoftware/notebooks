@@ -16,13 +16,21 @@ jobs:
       - name: Checkout stingray repo
         uses: actions/checkout@v4
         with:
-          repository: AnonymousCodes911/stingray
+          repository: StingraySoftware/stingray
           path: ./stingray
+
+      - name: Checkout notebooks repo
+        uses: actions/checkout@v4
+        with:
+          repository: StingraySoftware/notebooks
+          ref: ${{ github.head_ref }}
+          path: ./notebooks
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
+
       - name: Install pandoc
         run: |
           wget https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2-1-amd64.deb
@@ -34,13 +42,10 @@ jobs:
           sudo apt-get install pandoc
           sudo apt-get install -y fonts-freefont-ttf
           pip install sphinx sphinx-astropy nbsphinx
-      
+
       - name: Install Tox
         run: |
           pip install tox
-
-      - name: Install Stingray
-        run: pip install ./stingray
 
       - name: Run Stingray tox test
         run: |
