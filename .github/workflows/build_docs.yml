@@ -36,9 +36,11 @@ jobs:
       - name: Update submodules
         run: |
           git submodule update --init --recursive
+        working-directory: ./notebooks
       - name: Checkout notebooks submodule branch
         run: |
           git checkout tox_update
+        working-directory: ./notebooks
 
       - name: Run Build Docs
         run: tox -e build_docs
