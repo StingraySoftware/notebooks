@@ -19,7 +19,7 @@ jobs:
       - name: Checkout notebooks repo
         uses: actions/checkout@v4
         with:
-          repository: StingraySoftware/notebooks  
+          repository: AnonymousCodes911/notebooks  
           ref: tox_update  
           path: ./notebooks
       - name: Setup Python
@@ -37,10 +37,6 @@ jobs:
         run: |
           git submodule update --init --recursive
         working-directory: ./notebooks
-      - name: Debug current directory
-        run: |
-          echo "Current directory: $(pwd)"
-
       - name: Checkout notebooks submodule branch
         run: |
           git checkout tox_update
