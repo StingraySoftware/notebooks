@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: AnonymousCodes911/notebooks  
-          ref: main  
+          ref: tox_update  
           path: ./notebooks
 
       - name: Setup Python
