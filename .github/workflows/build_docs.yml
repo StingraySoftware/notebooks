@@ -38,7 +38,8 @@ jobs:
           git submodule update --init --recursive
         working-directory: ./notebooks
       - name: Debug current directory
-        run: echo "Current directory: $(pwd)"
+        run: |
+          echo "Current directory: $(pwd)"
 
       - name: Checkout notebooks submodule branch
         run: |
