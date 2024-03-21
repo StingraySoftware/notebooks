@@ -36,6 +36,7 @@ jobs:
       - name: Update submodules
         run: |
           git submodule update --init --recursive
+        working-directory: ./stingray
       - name: Checkout notebooks submodule branch
         run: |
           git checkout tox_update
