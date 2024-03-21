@@ -13,11 +13,9 @@ jobs:
   build-notebooks:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout stingray repo
-        uses: actions/checkout@v4
-        with:
-          repository: StingraySoftware/stingray
-          path: ./stingray
+      - name: Install Stingray
+        run: pip install -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
+
 
       - name: Checkout notebooks repo
         uses: actions/checkout@v4
