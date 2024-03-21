@@ -49,6 +49,5 @@ jobs:
 
       - name: Run Stingray tox test
         run: |
-          cd notebooks
           tox -e build_docs
-        working-directory: ./notebooks
+        working-directory: .
