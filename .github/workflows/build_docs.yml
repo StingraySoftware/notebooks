@@ -44,6 +44,7 @@ jobs:
       - name: Checkout notebooks submodule branch
         run: |
           git checkout tox_update
+        working-directory: ./notebooks
       - name: Run Build Docs
         run: tox -e build_docs
         working-directory: ./stingray
