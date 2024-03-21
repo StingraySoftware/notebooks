@@ -1,4 +1,4 @@
-can this work with :name: Build & Test Notebooks
+name: Build & Test Notebooks
 on:
   push:
     branches:
