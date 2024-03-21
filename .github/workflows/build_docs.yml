@@ -42,6 +42,16 @@ jobs:
           sudo apt-get install pandoc
           sudo apt-get install -y fonts-freefont-ttf
           pip install sphinx sphinx-astropy nbsphinx
+      
+      - name: Installing Stingray 
+        run: |
+          pip install -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
+
+      - name: Update submodules and checkout notebooks submodule
+        run: |
+          git submodule update --init --recursive
+          git checkout main
+        working-directory: ./notebooks
 
       - name: Install Tox
         run: |
