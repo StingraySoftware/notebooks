@@ -43,12 +43,16 @@ jobs:
           cd ./notebooks
           git submodule update --init --recursive
 
+      - name: Debug GitHub workspace
+        run: echo "GitHub workspace: ${GITHUB_WORKSPACE}"
+
       - name: Check current directory
         run: |
           if [[ "$(pwd)" != "${GITHUB_WORKSPACE}/stingray" ]]; then
             echo "Error: not in the stingray main directory"
             exit 1
           fi
+    
 
       - name: Run Build Docs
         run: |
