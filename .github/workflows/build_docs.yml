@@ -44,6 +44,12 @@ jobs:
         run: |
           cd ./notebooks
           git submodule update --init --recursive
+      
+      - name: Debug current directory
+        run: |
+          echo "Current directory: $(pwd)"
+          ls -la
+
 
       - name: Check current directory
         run: |
