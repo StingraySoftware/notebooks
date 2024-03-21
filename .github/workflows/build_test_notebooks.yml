@@ -41,7 +41,6 @@ jobs:
         run: |
           git checkout tox_update
         working-directory: ./notebooks
-
       - name: Run Build Docs
         run: tox -e build_docs
-        working-directory: ./notebooks
+        working-directory: ./stingray
