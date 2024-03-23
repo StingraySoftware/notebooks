@@ -43,4 +43,4 @@ jobs:
         working-directory: ./notebooks
       - name: Run Build Docs
         run: tox -e build_docs
-        working-directory: ./stingray
+        working-directory: ./docs/stingray
