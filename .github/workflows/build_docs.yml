@@ -41,9 +41,9 @@ jobs:
         run: |
           git checkout tox_update
         working-directory: ./notebooks
-      - name: Move notebooks to stingray/docs
+      - name: Copy notebooks to stingray/docs
         run: |
-          mv ./notebooks ./stingray/docs/notebooks
+          cp -r ./notebooks ./stingray/docs/notebooks
       - name: Run Build Docs
         run: tox -e build_docs
         working-directory: ./stingray/docs
