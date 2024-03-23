@@ -48,11 +48,7 @@ jobs:
           git checkout tox_update
         working-directory: ./notebooks
         
-      - name: Copy notebooks to stingray/docs
-        run: |
-          cp -r ./notebooks/* ./stingray/docs/notebooks
-        
-      - name: List notebooks directory
+      - name: List[debug] notebooks directory
         run: |
           ls ./stingray/docs/notebooks
 
