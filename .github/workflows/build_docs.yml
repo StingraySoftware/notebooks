@@ -51,6 +51,11 @@ jobs:
       - name: Copy notebooks to stingray/docs
         run: |
           cp -r ./notebooks/* ./stingray/docs/notebooks
+        
+      - name: List notebooks directory
+        run: |
+          ls ./stingray/docs/notebooks
+
 
       - name: Run Build Docs
         run: tox -e build_docs
