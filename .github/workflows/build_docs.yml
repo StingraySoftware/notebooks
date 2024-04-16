@@ -23,7 +23,7 @@ jobs:
       - name: Checkout notebooks repo
         uses: actions/checkout@v4
         with:
-          repository: StingraySoftware/notebooks
+          repository: AnonymousCodes911/notebooks
           ref: tox_update
           path: ./notebooks
 
@@ -49,8 +49,8 @@ jobs:
       - name: Checkout PR version of notebooks
         run: |
           cd ./notebooks
-          git fetch origin pull/99/head:pr-99
-          git checkout pr-99
+          git fetch origin pull/${{ github.event.pull_request.number }}/head
+          git checkout FETCH_HEAD
 
       - name: Run Build Docs
         run: |
