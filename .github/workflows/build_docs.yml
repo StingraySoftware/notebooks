@@ -20,15 +20,12 @@ jobs:
           repository: StingraySoftware/stingray
           path: ./stingray
 
-      # checkout the exact version of notebooks submodule
-      - name: Checkout notebooks submodule
-        run: |
-          cd ./stingray
-          git submodule update --init --recursive
-          cd notebooks
-          git fetch origin refs/pull/{pull_request_number}/head:refs/remotes/origin/pull/{99}
-          git checkout {99}
-          cd ..
+      - name: Checkout notebooks repo
+        uses: actions/checkout@v4
+        with:
+          repository: AnonymousCodes911/notebooks  
+          ref: tox_update  
+          path: ./notebooks
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -43,6 +40,16 @@ jobs:
 
       - name: Install Stingray
         run: pip install -e ./stingray
+
+      - name: Update submodules
+        run: |
+          cd ./stingray
+      #PR version check for PR-99   
+      - name: Checkout PR version of notebooks
+        run: |
+          cd ./notebooks
+          git fetch origin pull/99/head:pr-99
+          git checkout pr-99
 
       - name: Run Build Docs
         run: |
