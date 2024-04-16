@@ -19,7 +19,7 @@ jobs:
         with:
           repository: StingraySoftware/stingray
           path: ./stingray
-          submodules: false  # Disables checkout of submodules
+          submodules: true # enable checkout of submodules
 
       - name: Checkout PR version of notebooks
         if: github.event_name == 'pull_request'
