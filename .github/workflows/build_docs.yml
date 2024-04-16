@@ -19,13 +19,14 @@ jobs:
         with:
           repository: StingraySoftware/stingray
           path: ./stingray
+          submodules: false  # Disables checkout of submodules
 
-      - name: Checkout notebooks repo
-        uses: actions/checkout@v4
-        with:
-          repository: AnonymousCodes911/notebooks
-          ref: tox_update
-          path: ./notebooks
+      - name: Checkout PR version of notebooks
+        if: github.event_name == 'pull_request'
+        run: |
+          cd ./stingray/notebooks  # Change to the submodule directory
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:PR_${{ github.event.pull_request.number }}
+          git checkout PR_${{ github.event.pull_request.number }}
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -40,19 +41,6 @@ jobs:
 
       - name: Install Stingray
         run: pip install -e ./stingray
-        
-      - name: Update submodules
-        run: |
-          cd ./stingray
-          git submodule update --init --recursive
-      # PR version check for PR-99   
-      - name: Checkout PR version of notebooks
-        if: github.event_name == 'pull_request'
-        run: |
-          cd ./notebooks
-          git fetch origin pull/${{ github.event.pull_request.number }}/head:PR_${{ github.event.pull_request.number }}
-          git checkout PR_${{ github.event.pull_request.number }}
-
 
       - name: Run Build Docs
         run: |
