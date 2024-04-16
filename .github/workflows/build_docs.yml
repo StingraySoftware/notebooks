@@ -27,7 +27,6 @@ jobs:
           ref: tox_update
           path: ./notebooks
 
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -45,12 +44,12 @@ jobs:
       - name: Update submodules
         run: |
           cd ./stingray
-      #PR version check for PR-99   
+      # PR version check for PR-99   
       - name: Checkout PR version of notebooks
         run: |
           cd ./notebooks
-          git fetch origin pull/${{ github.event.pull_request.number }}/head
-          git checkout FETCH_HEAD
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:PR_${{ github.event.pull_request.number }}
+          git checkout PR_${{ github.event.pull_request.number }}
 
       - name: Run Build Docs
         run: |
