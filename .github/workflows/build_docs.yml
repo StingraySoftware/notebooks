@@ -46,10 +46,12 @@ jobs:
           cd ./stingray
       # PR version check for PR-99   
       - name: Checkout PR version of notebooks
+        if: github.event_name == 'pull_request'
         run: |
           cd ./notebooks
           git fetch origin pull/${{ github.event.pull_request.number }}/head:PR_${{ github.event.pull_request.number }}
           git checkout PR_${{ github.event.pull_request.number }}
+
 
       - name: Run Build Docs
         run: |
