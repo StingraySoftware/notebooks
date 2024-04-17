@@ -45,4 +45,5 @@ jobs:
 
       - name: Run Build Docs
         run: |
+          cd ./stingray
           tox -e build_docs
