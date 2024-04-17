@@ -6,7 +6,7 @@ on:
       - main
   pull_request:
     branches:
-      - main
+      - tox_update
     paths:
       - 'notebooks/**'
   workflow_dispatch:
