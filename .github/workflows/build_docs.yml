@@ -19,31 +19,28 @@ jobs:
         with:
           repository: StingraySoftware/stingray
           path: ./stingray
-          submodules: true # enable checkout of submodules
+          submodules: true 
 
       - name: Checkout PR version of notebooks
         if: github.event_name == 'pull_request'
         run: |
-          cd ./stingray/notebooks  # Change to the submodule directory
+          cd ./stingray/notebooks
           git fetch origin pull/${{ github.event.pull_request.number }}/head:PR_${{ github.event.pull_request.number }}
           git checkout PR_${{ github.event.pull_request.number }}
-          
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      
+
       - name: Install pandoc and dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y pandoc fonts-freefont-ttf
-          pip install sphinx sphinx-astropy tox nbsphinx
+          pip install sphinx sphinx-astropy tox
       - name: Install Stingray
-        run: pip install -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
+        run: pip install -e ./stingray
 
       - name: Run Build Docs
         run: |
-          cd ..
-          git clone https://github.com/StingraySoftware/stingray.git
-          cd stingray
+          cd ./stingray
           tox -e build_docs
