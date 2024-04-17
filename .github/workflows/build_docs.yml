@@ -37,7 +37,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y pandoc fonts-freefont-ttf
-          pip install sphinx sphinx-astropy tox
+          pip install sphinx sphinx-astropy tox nbsphinx
 
       - name: Install Stingray
         run: pip install -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
