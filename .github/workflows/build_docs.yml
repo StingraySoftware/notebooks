@@ -22,14 +22,6 @@ jobs:
           repository: StingraySoftware/notebooks
           path: ./Stingray
           submodules: true # enable checkout of submodules
-
-      - name: Checkout PR version of notebooks
-        if: github.event_name == 'pull_request'
-        run: |
-          cd ./notebooks  # Change to the submodule directory
-          git fetch origin pull/${{ github.event.pull_request.number }}/head:PR_${{ github.event.pull_request.number }}
-          git checkout PR_${{ github.event.pull_request.number }}
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -43,6 +35,14 @@ jobs:
 
       - name: Install Stingray
         run: pip install -e ./stingray
+
+      - name: Checkout PR version of notebooks
+        if: github.event_name == 'pull_request'
+        run: |
+          cd ./notebooks  # Change to the submodule directory
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:PR_${{ github.event.pull_request.number }}
+          git checkout PR_${{ github.event.pull_request.number }}
+
 
       - name: Run Build Docs
         run: |
