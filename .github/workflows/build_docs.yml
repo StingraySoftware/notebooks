@@ -34,7 +34,7 @@ jobs:
           pip install sphinx sphinx-astropy tox
 
       - name: Install Stingray
-        run: pip install -e ./stingray
+        run: pip install -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
 
       - name: Checkout PR version of notebooks
         if: github.event_name == 'pull_request'
