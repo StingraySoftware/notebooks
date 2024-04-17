@@ -45,5 +45,5 @@ jobs:
 
       - name: Run Build Docs
         run: |
-          cd ./notebooks
+          cd ./Stingray
           tox -e build_docs
