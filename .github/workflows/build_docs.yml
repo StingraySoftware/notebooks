@@ -27,6 +27,12 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Checkout PR version of notebooks
+        if: github.event_name == 'pull_request'
+        run: |
+          cd ./notebooks  # Change to the submodule directory
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:PR_${{ github.event.pull_request.number }}
+          git checkout PR_${{ github.event.pull_request.number }}
       - name: Install pandoc and dependencies
         run: |
           sudo apt-get update
@@ -35,13 +41,6 @@ jobs:
 
       - name: Install Stingray
         run: pip install -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
-
-      - name: Checkout PR version of notebooks
-        if: github.event_name == 'pull_request'
-        run: |
-          cd ./notebooks  # Change to the submodule directory
-          git fetch origin pull/${{ github.event.pull_request.number }}/head:PR_${{ github.event.pull_request.number }}
-          git checkout PR_${{ github.event.pull_request.number }}
 
 
       - name: Run Build Docs
