@@ -42,8 +42,9 @@ jobs:
       - name: Install Stingray
         run: pip install -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
 
-
       - name: Run Build Docs
         run: |
-          cd ./Stingray
+          cd ..
+          git clone https://github.com/StingraySoftware/stingray.git
+          cd stingray
           tox -e build_docs
