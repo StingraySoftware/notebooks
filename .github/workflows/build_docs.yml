@@ -17,8 +17,8 @@ jobs:
       - name: Checkout stingray repo
         uses: actions/checkout@v4
         with:
-          repository: StingraySoftware/Stingray
-          path: ./Stingray
+          repository: StingraySoftware/stingray
+          path: ./stingray
           submodules: true # enable checkout of submodules
 
       - name: Checkout PR version of notebooks
