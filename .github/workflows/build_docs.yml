@@ -40,7 +40,7 @@ jobs:
           pip install sphinx sphinx-astropy tox
 
       - name: Install Stingray
-        run: pip install -e ./notebooks
+        run: pip install -e ./stingray
 
       - name: Run Build Docs
         run: |
