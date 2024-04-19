@@ -21,20 +21,17 @@ jobs:
           path: ./stingray
           submodules: recursive
 
-      - name: Get latest commit of the PR
-        id: pr_commit
+      - name: Get latest commit of the PR and Checkout PR version of notebooks
         run: |
-          PR_SHA=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}" | jq -r .head.sha)
+          PR_SHA=$(curl -s 'https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}' | jq -r .head.sha)
           if [ "$PR_SHA" == "null" ]; then
             echo "::error::Failed to get PR SHA"
             exit 1
           fi
-          echo "::set-output name=commit::$PR_SHA"
-      - name: Checkout PR version of notebooks
-        run: |
+          echo "commit=$PR_SHA" >> $GITHUB_ENV
           cd ./stingray/docs/notebooks # Change to the submodule directory
           pwd
-          git fetch origin ${{ steps.pr_commit.outputs.commit }}:pr_temp
+          git fetch origin $PR_SHA:pr_temp
           git checkout pr_temp
       - name: Verify submodule update
         run: |
