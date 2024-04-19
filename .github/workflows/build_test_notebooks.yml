@@ -21,8 +21,12 @@ jobs:
           path: ./stingray
           submodules: recursive
 
+      # This step gets the latest commit of the PR or the pushed commit and checks out the PR version of the notebooks
       - name: Get latest commit of the PR or pushed commit and Checkout PR version of Notebooks
         run: |
+
+          # If the event is a pull request, fetch the PR SHA
+
           if [ "${{ github.event_name }}" == "pull_request" ]; then
             echo "PR event detected. Fetching PR SHA..."
             PR_SHA=$(curl -s 'https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}' | jq -r .head.sha)
@@ -31,18 +35,22 @@ jobs:
               exit 1
             fi
             echo "commit=$PR_SHA" >> $GITHUB_ENV
-            cd ./stingray/docs/notebooks
+            cd ./stingray/docs/notebooks # Change to the submodule directory
             git fetch origin $PR_SHA:pr_temp
             git checkout pr_temp
+
+          # If the event is a push, use the pushed commit SHA
+
           else
             echo "Push event detected. Using pushed commit SHA..."
             echo "commit=${{ github.sha }}" >> $GITHUB_ENV
-            cd ./stingray/docs/notebooks
+            cd ./stingray/docs/notebooks # Change to the submodule directory
             pwd
             git fetch origin ${{ github.sha }}:pr_temp
             git checkout pr_temp
           fi
 
+      # This step verifies that the submodule has been updated
       - name: Verify submodule update
         run: |
           cd ./stingray/docs/notebooks
