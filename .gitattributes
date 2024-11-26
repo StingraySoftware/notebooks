@@ -1,3 +1,5 @@
 # To ignore prompt numbers and cell output when adding any notebook.
 # See https://github.com/adrn/DropOutput for configuration.
-*.ipynb  filter=clean_ipynb
+#*.ipynb  filter=clean_ipynb : this package was not working and returning larger diffs
+*.ipynb filter= nbstripout
+*.ipynb diff=jupyternotebook
