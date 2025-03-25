@@ -3,4 +3,5 @@ scipy
 matplotlib
 emcee
 corner
+seaborn
 -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
