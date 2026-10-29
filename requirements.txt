@@ -7,6 +7,7 @@ pandas
 seaborn
 tqdm
 psutil
+memory_profiler
 pillow
 h5py
 emcee
