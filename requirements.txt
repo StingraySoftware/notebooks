@@ -1,6 +1,21 @@
+# Install these, then the notebooks in this repository will run. Stingray needs Python >= 3.11.
 numpy
 scipy
 matplotlib
+astropy
+pandas
+seaborn
+tqdm
+psutil
+pillow
+h5py
 emcee
 corner
+lightkurve
+ultranest
 -e git+https://github.com/StingraySoftware/stingray.git#egg=stingray
+
+# The Gaussian-process tutorial (Modeling/GP_Modeling) additionally needs the JAX
+# stack, which is left out above because tfp-nightly is a nightly build and would
+# make this environment fragile to rebuild:
+#   pip install jax tinygp jaxns tfp-nightly etils typing_extensions
